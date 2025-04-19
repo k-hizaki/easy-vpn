@@ -1,0 +1,38 @@
+services:
+  easy-vpn:
+    env_file:
+      - .env
+    image: easy-vpn:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - "1194:1194/tcp"
+    volumes:
+      - ./config:/config
+      - ./scripts:/scripts
+      - ./secret:/secret
+      - openvpn:/etc/openvpn
+    entrypoint: ["sh", "/scripts/entrypoint.sh"]
+  easy-vpn-api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "80:80/tcp"
+      - "443:443/tcp"
+    volumes:
+      - ./config:/config
+      - ./scripts:/scripts
+      - ./secret:/secret
+      - openvpn:/etc/openvpn
+    depends_on:
+      - easy-vpn
+volumes:
+  openvpn:

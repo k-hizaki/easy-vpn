@@ -1,0 +1,12 @@
+{
+  "name": "easy-vpn-api",
+  "version": "1.0.0",
+  "main": "backend.js",
+  "dependencies": {
+    "express": "5.1.0",
+    "express-rate-limit": "7.5.0",
+    "basic-auth": "2.0.1",
+    "dotenv": "16.5.0",
+    "jsonwebtoken": "9.0.2"
+  }
+}
